@@ -1,0 +1,38 @@
+.errorComp {
+    position: fixed;
+    top: 87px;
+    right: 22px;
+}
+
+
+.alert-enter {}
+
+.alert-enter-active {
+    animation: alert 350ms ease-in alternate-reverse;
+}
+
+.alert-exit {
+    opacity: 1;
+}
+
+.alert-exit-active {
+    animation-duration: 350ms;
+    animation-name: alert;
+    opacity: 0;
+}
+
+@keyframes alert {
+    0% {
+        transform: translateX(0);
+    }
+
+    30% {
+        opacity: 0.7;
+        transform: translateX(-30px);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(200px);
+    }
+}
