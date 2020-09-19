@@ -30,19 +30,25 @@ const App = () => {
     'To view images, make a selection and click "Search photo"',
   );
 
-  const searchPhotos = (propSol, propRover, propCamera) => {
-    setLoader(true);
-    setForm({ sol: propSol, rover: propRover, camera: propCamera });
-    fetchImagesWithMars(propSol, propRover, page, propCamera)
-      .then(photos => {
-        setPhotos(photos);
-        setMessage(photos.length === 0 ? 'No Images Found' : '');
-      })
-      .catch(error => {
-        setError(true);
-        setText(error.message);
-      })
-      .finally(setLoader(false));
+  const searchPhotos = async (propSol, propRover, propCamera) => {
+    try {
+      setError(false);
+      setLoader(true);
+      setForm({ sol: propSol, rover: propRover, camera: propCamera });
+      const result = await fetchImagesWithMars(
+        propSol,
+        propRover,
+        page,
+        propCamera,
+      );
+      setPhotos(result);
+      setMessage(result.length === 0 ? 'No Images Found' : '');
+    } catch (error) {
+      setError(true);
+      setText(error.message);
+    } finally {
+      setLoader(false);
+    }
   };
 
   const loadMore = async () => {
