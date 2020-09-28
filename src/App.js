@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+// import { Switch, Route, Redirect, useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Header from './Components/Header/Header.js';
@@ -12,62 +14,71 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import Modal from './Components/Modal/Modal';
 import { fetchImagesWithMars } from './services/nasaApi';
+import {
+  loaderStatus,
+  modalStatus,
+  addTextStatus,
+  addModalImg,
+  errorStatus,
+  addMessageStatus,
+  addPhotos,
+  addPhotosPlus,
+  addPage,
+  addPrevForm,
+} from './redux/action';
 
 const App = () => {
-  const [loader, setLoader] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-  const [error, setError] = useState(null);
-  const [largeImage, setLargeImage] = useState(null);
-  const [text, setText] = useState('');
-  const [photos, setPhotos] = useState([]);
-  const [page, setPage] = useState(1);
-  const [prevForm, setForm] = useState({
-    sol: null,
-    rover: null,
-    camera: null,
-  });
-  const [message, setMessage] = useState(
-    'To view images, make a selection and click "Search photo"',
-  );
+  const loader = useSelector(state => state.loader);
+  const showModal = useSelector(state => state.showModal);
+  const error = useSelector(state => state.error);
+  const largeImage = useSelector(state => state.largeImage);
+  const text = useSelector(state => state.text);
+  const photos = useSelector(state => state.photos);
+  const message = useSelector(state => state.message);
+  const page = useSelector(state => state.page);
+  const prevForm = useSelector(state => state.prevForm);
+  const form = useSelector(state => state.form);
+
+  const dispatch = useDispatch();
 
   const searchPhotos = async (propSol, propRover, propCamera) => {
     try {
-      setError(false);
-      setLoader(true);
-      setForm({ sol: propSol, rover: propRover, camera: propCamera });
+      dispatch(errorStatus(false));
+      dispatch(loaderStatus(true));
+      dispatch(addPrevForm(form));
       const result = await fetchImagesWithMars(
         propSol,
         propRover,
-        page,
+        1,
         propCamera,
       );
-      setPhotos(result);
-      setMessage(result.length === 0 ? 'No Images Found' : '');
+      dispatch(addPhotos([...result]));
+      dispatch(addMessageStatus(result.length === 0 ? 'No Images Found' : ''));
     } catch (error) {
-      setError(true);
-      setText(error.message);
+      dispatch(errorStatus(true));
+      dispatch(addTextStatus(error.message));
     } finally {
-      setLoader(false);
+      dispatch(loaderStatus(false));
     }
   };
 
   const loadMore = async () => {
     try {
-      setError(false);
-      setLoader(true);
+      dispatch(errorStatus(false));
+      dispatch(loaderStatus(true));
       const result = await fetchImagesWithMars(
         prevForm.sol,
         prevForm.rover,
         page + 1,
         prevForm.camera,
       );
-      setPage(page + 1);
-      await setPhotos([...photos, ...result]);
+      dispatch(addPage());
+      await dispatch(addPhotosPlus(result));
     } catch (error) {
-      setError(true);
-      setText(error.message);
+      dispatch(errorStatus(true));
+      dispatch(addTextStatus(error.message));
     } finally {
-      setLoader(false);
+      dispatch(loaderStatus(false));
       window.scrollTo({
         top: document.documentElement.scrollHeight,
         behavior: 'smooth',
@@ -76,11 +87,11 @@ const App = () => {
   };
 
   const parseLargeImage = url => {
-    setLargeImage(url);
+    dispatch(addModalImg(url));
   };
 
   const toggleModal = e => {
-    setShowModal(!showModal);
+    dispatch(modalStatus(!showModal));
   };
 
   const classes = useStyles();

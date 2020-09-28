@@ -33,16 +33,16 @@
 }
 
 
+.Modal {
+    max-width: calc(100vw - 48px);
+    max-height: calc(100vh - 24px);
+}
 
 .modalImage {
     cursor: zoom-out;
     border-radius: 4px;
 }
 
-.Modal {
-    max-width: calc(100vw - 48px);
-    max-height: calc(100vh - 24px);
-}
 
 
 @media (max-width: 560px) {

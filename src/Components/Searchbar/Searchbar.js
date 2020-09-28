@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
@@ -9,36 +9,46 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import Alerting from '../Alert/Alert';
+import { alertToggle } from '../../redux/action';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  // changeForm,
+  changeSol,
+  changeCamera,
+  changeRover,
+} from '../../redux/action';
 
 const Searchbar = ({ searchPhotos }) => {
-  const [form, setForm] = useState({
-    sol: '',
-    rover: 'curiosity',
-    camera: 'navcam',
-  });
+  // const [form, setForm] = useState({
+  //   sol: '',
+  //   rover: 'curiosity',
+  //   camera: 'navcam',
+  // });
+  // const [alert, setAlert] = useState(false);
 
-  const [alert, setAlert] = useState(false);
+  const dispatch = useDispatch();
+  const alert = useSelector(state => state.alert);
+  const form = useSelector(state => state.form);
 
   const hendleSubmit = e => {
     e.preventDefault();
-
     if (form.sol.replace(/\s/g, '') === '') {
-      setAlert(true);
+      dispatch(alertToggle());
       setTimeout(() => {
-        setAlert(false);
+        dispatch(alertToggle());
       }, 2800);
     } else {
       searchPhotos(form.sol, form.rover, form.camera);
     }
   };
 
-  const handleChange = e => {
-    const { name, value } = e.target;
-    setForm(state => ({
-      ...state,
-      [name]: value,
-    }));
-  };
+  // const handleChange = e => {
+  //   const { name, value } = e.target;
+  // setForm(state => ({
+  //   ...state,
+  //   [name]: value,
+  // }));
+  // };
 
   const classes = useStyles();
   return (
@@ -50,7 +60,10 @@ const Searchbar = ({ searchPhotos }) => {
       <form onSubmit={hendleSubmit} noValidate>
         <Grid container spacing={1} justify="center">
           <FormControl className={classes.formControl}>
-            <NativeSelect name="rover" onChange={handleChange}>
+            <NativeSelect
+              name="rover"
+              onChange={e => dispatch(changeRover(e.target.value))}
+            >
               <option value="curiosity">Curiosity</option>
               <option value="opportunity">Opportunity</option>
               <option value="spirit">Spirit</option>
@@ -59,7 +72,10 @@ const Searchbar = ({ searchPhotos }) => {
           </FormControl>
 
           <FormControl className={classes.formControl}>
-            <NativeSelect name="camera" onChange={handleChange}>
+            <NativeSelect
+              name="camera"
+              onChange={e => dispatch(changeCamera(e.target.value))}
+            >
               <option value="navcam">navigation camera</option>
               <option value="fhaz">Front camera</option>
               <option value="rhaz">Rear camera</option>
@@ -74,7 +90,7 @@ const Searchbar = ({ searchPhotos }) => {
               type="number"
               name="sol"
               value={form.sol}
-              onChange={handleChange}
+              onChange={e => dispatch(changeSol(e.target.value))}
               style={{ maxWidth: 154 }}
             />
             <FormHelperText>
