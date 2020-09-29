@@ -35,7 +35,7 @@ const rootReducer = combineReducers({
 const persistConfig = {
   key: 'photos',
   storage,
-  whitelist: ['photos'],
+  whitelist: ['photos', 'page', 'prevForm'],
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

@@ -53,7 +53,7 @@ const App = () => {
         propCamera,
       );
       dispatch(addPhotos([...result]));
-      dispatch(addMessageStatus(result.length === 0 ? 'No Images Found' : ''));
+      dispatch(addMessageStatus(photos.length === 0 ? 'No Images Found' : ''));
     } catch (error) {
       dispatch(errorStatus(true));
       dispatch(addTextStatus(error.message));
