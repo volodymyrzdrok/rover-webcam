@@ -13,6 +13,7 @@ import {
   PHOTOS_DATA_PLUS,
   PAGE_NUMBER,
   PREV_FORM,
+  PAGE_CHANGE,
 } from './constans';
 
 export const alertToggle = createAction('@alert/toggle');
@@ -75,9 +76,9 @@ export const addPhotosPlus = dataPlus => ({
   payload: dataPlus,
 });
 
-// export const addPage = number => ({
-//   type: PAGE_NUMBER,
-//   payload: number,
-// });
-
 export const addPage = createAction(PAGE_NUMBER);
+
+export const changePage = number => ({
+  type: PAGE_CHANGE,
+  payload: number,
+});

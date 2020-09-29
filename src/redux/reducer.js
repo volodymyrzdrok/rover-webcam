@@ -13,6 +13,7 @@ import {
   PHOTOS_DATA_PLUS,
   PAGE_NUMBER,
   PREV_FORM,
+  PAGE_CHANGE,
 } from './constans';
 
 export const alert = (state = false, action) => {
@@ -127,6 +128,9 @@ export const page = (state = 1, action) => {
   switch (action.type) {
     case PAGE_NUMBER:
       return state + 1;
+
+    case PAGE_CHANGE:
+      return action.payload;
     default:
       return state;
   }

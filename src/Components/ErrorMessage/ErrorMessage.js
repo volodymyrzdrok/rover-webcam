@@ -1,8 +1,11 @@
 import React from 'react';
 import Loader from 'react-loader-spinner';
 import s from './ErrorMessage.module.css';
+import { useSelector } from 'react-redux';
 
-const ErrorMessage = ({ text }) => {
+const ErrorMessage = () => {
+  const text = useSelector(state => state.text);
+
   return (
     <div className="Overlay">
       <div className="Modal">

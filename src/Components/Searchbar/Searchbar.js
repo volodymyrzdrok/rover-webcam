@@ -11,21 +11,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import Alerting from '../Alert/Alert';
 import { alertToggle } from '../../redux/action';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  // changeForm,
-  changeSol,
-  changeCamera,
-  changeRover,
-} from '../../redux/action';
+import { changeSol, changeCamera, changeRover } from '../../redux/action';
+import { searchPhotosOperation } from '../../redux/operations';
 
-const Searchbar = ({ searchPhotos }) => {
-  // const [form, setForm] = useState({
-  //   sol: '',
-  //   rover: 'curiosity',
-  //   camera: 'navcam',
-  // });
-  // const [alert, setAlert] = useState(false);
-
+const Searchbar = () => {
   const dispatch = useDispatch();
   const alert = useSelector(state => state.alert);
   const form = useSelector(state => state.form);
@@ -38,17 +27,9 @@ const Searchbar = ({ searchPhotos }) => {
         dispatch(alertToggle());
       }, 2800);
     } else {
-      searchPhotos(form.sol, form.rover, form.camera);
+      dispatch(searchPhotosOperation(form.sol, form.rover, form.camera));
     }
   };
-
-  // const handleChange = e => {
-  //   const { name, value } = e.target;
-  // setForm(state => ({
-  //   ...state,
-  //   [name]: value,
-  // }));
-  // };
 
   const classes = useStyles();
   return (
@@ -133,3 +114,11 @@ const useStyles = makeStyles(theme => ({
 
   btnSubmit: { padding: theme.spacing(2, 2) },
 }));
+
+// const handleChange = e => {
+//   const { name, value } = e.target;
+// setForm(state => ({
+//   ...state,
+//   [name]: value,
+// }));
+// };

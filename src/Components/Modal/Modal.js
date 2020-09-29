@@ -1,18 +1,25 @@
 import React, { useEffect } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import './Modal.css';
+import { useSelector, useDispatch } from 'react-redux';
+import { modalStatus } from '../../redux/action';
 
-const Modal = ({ toggleModal, largeImage, showModal }) => {
+const Modal = () => {
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const henleKeyDown = e => {
-      e.code === 'Escape' && toggleModal();
+      e.code === 'Escape' && dispatch(modalStatus());
     };
 
     window.addEventListener('keydown', henleKeyDown);
     return () => {
       window.removeEventListener('keydown', henleKeyDown);
     };
-  }, [toggleModal]);
+  }, [dispatch]);
+
+  const showModal = useSelector(state => state.showModal);
+  const largeImage = useSelector(state => state.largeImage);
 
   return (
     <CSSTransition
@@ -21,7 +28,10 @@ const Modal = ({ toggleModal, largeImage, showModal }) => {
       classNames="alert"
       unmountOnExit
     >
-      <div className="Overlay" onClick={toggleModal}>
+      <div
+        className="Overlay"
+        onClick={() => dispatch(modalStatus(!showModal))}
+      >
         <div className="Modal">
           <img src={largeImage} alt="modalImage" className="modalImage" />
         </div>

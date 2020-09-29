@@ -14,4 +14,6 @@ export const PHOTOS_DATA = '@photos/data';
 export const PHOTOS_DATA_PLUS = '@photos/dataPlus';
 export const MESSAGE_STATUS = '@message/status';
 export const PAGE_NUMBER = '@page/number';
+
 export const PREV_FORM = '@form/prev';
+export const PAGE_CHANGE = '@page/change';
