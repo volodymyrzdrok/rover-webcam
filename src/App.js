@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 // import { Switch, Route, Redirect, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
@@ -113,7 +113,7 @@ const App = () => {
           {error && <ErrorMessage text={text} />}
           {photos.length > 0 && !loader && <Button loadMore={loadMore} />}
         </Container>
-        {message !== '' && (
+        {message !== '' && photos.length === 0 && (
           <Typography variant="h4" align="center" className={classes.message}>
             {message}
           </Typography>
