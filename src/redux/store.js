@@ -20,6 +20,7 @@ import {
 
 const middleWares = [thunk];
 const rootMiddleWares = applyMiddleware(...middleWares);
+
 const rootReducer = combineReducers({
   alert,
   form,
@@ -44,5 +45,7 @@ const store = createStore(
   persistedReducer,
   composeWithDevTools(rootMiddleWares),
 );
+
 export const persistor = persistStore(store);
 export default store;
+// ////////////////////////////////////////////////////////////////////////////

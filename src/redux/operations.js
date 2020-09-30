@@ -18,7 +18,7 @@ export const searchPhotosOperation = (sol, rover, camera) => async dispatch => {
     dispatch(loaderStatus(true));
     dispatch(addPrevForm({ sol, rover, camera }));
     const result = await fetchImagesWithMars(sol, rover, 1, camera);
-    dispatch(addPhotos([...result]));
+    dispatch(addPhotos(result));
     dispatch(addMessageStatus(result.length === 0 ? 'No Images Found' : ''));
   } catch (error) {
     dispatch(errorStatus(true));

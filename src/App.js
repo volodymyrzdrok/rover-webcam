@@ -37,6 +37,7 @@ const App = () => {
           </Typography>
         )}
       </main>
+
       <Footer />
       <Modal />
       <CssBaseline />
