@@ -9,14 +9,18 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import Alerting from '../Alert/Alert';
-import { alertToggle } from '../../redux/action';
 import { useSelector, useDispatch } from 'react-redux';
-import { changeSol, changeCamera, changeRover } from '../../redux/slice';
+import {
+  changeSol,
+  changeCamera,
+  changeRover,
+  alertToggle,
+} from '../../redux/slice';
 import { searchPhotosOperation } from '../../redux/operations';
 
 const Searchbar = () => {
   const dispatch = useDispatch();
-  const alert = useSelector(state => state.alert);
+  const alert = useSelector(state => state.action.alert);
   const form = useSelector(state => state.form);
 
   const hendleSubmit = e => {

@@ -15,10 +15,10 @@ import Container from '@material-ui/core/Container';
 import Modal from './Components/Modal/Modal';
 
 const App = () => {
-  const loader = useSelector(state => state.loader);
-  const error = useSelector(state => state.error);
+  const loader = useSelector(state => state.action.loader);
+  const error = useSelector(state => state.action.error);
   const photos = useSelector(state => state.photos);
-  const message = useSelector(state => state.message);
+  const message = useSelector(state => state.variables.message);
 
   const classes = useStyles();
   return (

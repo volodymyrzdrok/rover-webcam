@@ -6,8 +6,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { loadMoreOperation } from '../../redux/operations';
 
 const ButtonLM = () => {
-  const page = useSelector(state => state.page);
-  const prevForm = useSelector(state => state.prevForm);
+  const page = useSelector(state => state.variables.page);
+  const prevForm = useSelector(state => state.variables.prevForm);
   const dispatch = useDispatch();
   const classes = useStyles();
 

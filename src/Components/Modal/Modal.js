@@ -18,8 +18,8 @@ const Modal = () => {
     };
   }, [dispatch]);
 
-  const showModal = useSelector(state => state.showModal);
-  const largeImage = useSelector(state => state.largeImage);
+  const showModal = useSelector(state => state.action.showModal);
+  const largeImage = useSelector(state => state.variables.largeImage);
 
   return (
     <CSSTransition

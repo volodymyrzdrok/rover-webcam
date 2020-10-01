@@ -19,106 +19,59 @@ const photosSlice = createSlice({
   },
 });
 
-const alertSlice = createSlice({
-  name: 'alert',
-  initialState: false,
+const actionSlice = createSlice({
+  name: 'action',
+  initialState: { showModal: false, loader: false, alert: false, error: null },
   reducers: {
-    alertToggle: (state, action) => !state,
-  },
-});
-const loaderSlice = createSlice({
-  name: 'loader',
-  initialState: false,
-  reducers: {
-    loaderStatus: (state, action) => (state = action.payload),
-  },
-});
-const showModalSlice = createSlice({
-  name: 'showModal',
-  initialState: false,
-  reducers: {
-    modalStatus: (state, action) => (state = action.payload),
+    modalStatus: (state, action) => ({ ...state, showModal: action.payload }),
+    loaderStatus: (state, action) => ({ ...state, loader: action.payload }),
+    errorStatus: (state, action) => ({ ...state, error: action.payload }),
+    alertToggle: (state, action) => ({ ...state, alert: !state.alert }),
   },
 });
 
-const errorSlice = createSlice({
-  name: 'error',
-  initialState: null,
-  reducers: {
-    errorStatus: (state, action) => action.payload,
+const variablesSlice = createSlice({
+  name: 'variables',
+  initialState: {
+    prevForm: null,
+    largeImage: null,
+    text: '',
+    message: 'To view images, make a selection and click "Search photo"',
+    page: 1,
   },
-});
-const prevFormSlice = createSlice({
-  name: 'prevForm',
-  initialState: null,
   reducers: {
-    addPrevForm: (state, action) => action.payload,
-  },
-});
-const largeImageSlice = createSlice({
-  name: 'largeImage',
-  initialState: null,
-  reducers: {
-    addModalImg: (state, action) => action.payload,
-  },
-});
-const textSlice = createSlice({
-  name: 'text',
-  initialState: '',
-  reducers: {
-    addTextStatus: (state, action) => action.payload,
-  },
-});
-const messageSlice = createSlice({
-  name: 'message',
-  initialState: 'To view images, make a selection and click "Search photo"',
-  reducers: {
-    addMessageStatus: (state, action) => action.payload,
-  },
-});
-const pageSlice = createSlice({
-  name: 'page',
-  initialState: 1,
-  reducers: {
-    changePage: (state, action) => action.payload,
-    addPage: (state, action) => state + 1,
+    addPrevForm: (state, action) => ({ ...state, prevForm: action.payload }),
+    addModalImg: (state, action) => ({ ...state, largeImage: action.payload }),
+    addTextStatus: (state, action) => ({ ...state, text: action.payload }),
+    addMessageStatus: (state, action) => ({
+      ...state,
+      message: action.payload,
+    }),
+    changePage: (state, action) => ({ ...state, page: action.payload }),
+    addPage: (state, action) => ({ ...state, page: state.page + 1 }),
   },
 });
 
-export const { alertToggle } = alertSlice.actions;
 export const { changeSol, changeCamera, changeRover } = formSlice.actions;
-export const { loaderStatus } = loaderSlice.actions;
-export const { modalStatus } = showModalSlice.actions;
-export const { errorStatus } = errorSlice.actions;
-export const { addModalImg } = largeImageSlice.actions;
-export const { addTextStatus } = textSlice.actions;
+export const {
+  modalStatus,
+  loaderStatus,
+  alertToggle,
+  errorStatus,
+} = actionSlice.actions;
+export const {
+  addModalImg,
+  addMessageStatus,
+  addPrevForm,
+  addTextStatus,
+  addPage,
+  changePage,
+} = variablesSlice.actions;
 export const { addPhotos, addPhotosPlus } = photosSlice.actions;
-export const { addMessageStatus } = messageSlice.actions;
-export const { addPage, changePage } = pageSlice.actions;
-export const { addPrevForm } = prevFormSlice.actions;
 
-const alert = alertSlice.reducer;
+const variables = variablesSlice.reducer;
 const form = formSlice.reducer;
-const loader = loaderSlice.reducer;
-const showModal = showModalSlice.reducer;
-const error = errorSlice.reducer;
-const largeImage = largeImageSlice.reducer;
-const text = textSlice.reducer;
+const action = actionSlice.reducer;
 const photos = photosSlice.reducer;
-const message = messageSlice.reducer;
-const page = pageSlice.reducer;
-const prevForm = prevFormSlice.reducer;
 
-export default combineReducers({
-  alert,
-  form,
-  loader,
-  showModal,
-  error,
-  largeImage,
-  text,
-  photos,
-  message,
-  page,
-  prevForm,
-});
+export default combineReducers({ photos, form, action, variables });

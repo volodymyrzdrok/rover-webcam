@@ -7,7 +7,7 @@ import './ImageGallery.css';
 import { modalStatus, addModalImg } from '../../redux/slice';
 
 const ImageGallery = ({ photos }) => {
-  const showModal = useSelector(state => state.showModal);
+  const showModal = useSelector(state => state.action.showModal);
   const dispatch = useDispatch();
 
   const toggleModal = () => {
