@@ -1,4 +1,5 @@
 import { fetchImagesWithMars } from '../services/nasaApi';
+
 import {
   loaderStatus,
   addTextStatus,
@@ -9,7 +10,7 @@ import {
   addPage,
   addPrevForm,
   changePage,
-} from './action';
+} from './slice';
 
 export const searchPhotosOperation = (sol, rover, camera) => async dispatch => {
   dispatch(changePage(1));

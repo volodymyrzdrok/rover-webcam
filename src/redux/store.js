@@ -1,51 +1,32 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux';
-// import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import thunk from 'redux-thunk';
-import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import {
-  alert,
-  form,
-  loader,
-  showModal,
-  error,
-  largeImage,
-  text,
-  photos,
-  message,
-  page,
-  prevForm,
-} from './reducer';
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
-const middleWares = [thunk];
-const rootMiddleWares = applyMiddleware(...middleWares);
+import allReducersSlice from './slice';
 
-const rootReducer = combineReducers({
-  alert,
-  form,
-  loader,
-  showModal,
-  error,
-  largeImage,
-  text,
-  photos,
-  message,
-  page,
-  prevForm,
-});
 const persistConfig = {
   key: 'photos',
   storage,
   whitelist: ['photos', 'page', 'prevForm'],
 };
-const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-const store = createStore(
-  persistedReducer,
-  composeWithDevTools(rootMiddleWares),
-);
+const store = configureStore({
+  reducer: persistReducer(persistConfig, allReducersSlice),
+  middleware: getDefaultMiddleware({
+    serializableCheck: {
+      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+    },
+  }),
+});
 
 export const persistor = persistStore(store);
 export default store;
-// ////////////////////////////////////////////////////////////////////////////

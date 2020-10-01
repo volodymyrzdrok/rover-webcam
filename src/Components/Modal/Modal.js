@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import './Modal.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { modalStatus } from '../../redux/action';
+import { modalStatus } from '../../redux/slice';
 
 const Modal = () => {
   const dispatch = useDispatch();

@@ -11,7 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Alerting from '../Alert/Alert';
 import { alertToggle } from '../../redux/action';
 import { useSelector, useDispatch } from 'react-redux';
-import { changeSol, changeCamera, changeRover } from '../../redux/action';
+import { changeSol, changeCamera, changeRover } from '../../redux/slice';
 import { searchPhotosOperation } from '../../redux/operations';
 
 const Searchbar = () => {
