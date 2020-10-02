@@ -16,7 +16,7 @@ import allReducersSlice from './slice';
 const persistConfig = {
   key: 'photos',
   storage,
-  whitelist: ['photos', 'page', 'prevForm'],
+  whitelist: ['photos', 'variables'],
 };
 
 const store = configureStore({
